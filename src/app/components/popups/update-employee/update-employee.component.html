@@ -1,0 +1,76 @@
+<script src="update-employee.component.ts"></script>
+<app-modal-wrapper [size]="'sm'" #updateEmployeeModalWrapper title="Sửa nhân viên" (hideEvent)="onHideEvent()">
+  <form #updateEmployeeForm="ngForm" novalidate (submit)="onSave()" >
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <label for="nameInputAdd">Tên nhân viên</label>
+          <input type="text" class="form-control" name="nameInputAdd" id="nameInputAdd" #nameInputAdd="ngModel"
+                 [(ngModel)]="employee.name" placeholder="Tên nhân viên"
+                 [class]="{'is-invalid': nameInputAdd.touched && nameInputAdd.errors}" required/>
+          <ng-template [ngIf]="nameInputAdd.touched && nameInputAdd.invalid">
+            <div *ngIf="nameInputAdd.errors?.required" class="invalid-feedback d-block">
+              Vui lòng nhập tên nhân viên
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 form-group">
+          <label for="emailInputAdd">Email</label>
+          <input type="email" class="form-control" name="emailInputAdd" id="emailInputAdd" #emailInputAdd="ngModel"
+                 [(ngModel)]="employee.email" placeholder="Email" [pattern]="emailPattern"
+                 [class]="{'is-invalid': emailInputAdd.touched && emailInputAdd.errors}" required/>
+          <ng-template [ngIf]="emailInputAdd.touched && emailInputAdd.invalid">
+            <div *ngIf="emailInputAdd.errors?.required" class="invalid-feedback d-block">
+              Vui lòng nhập email
+            </div>
+            <div *ngIf="emailInputAdd.errors?.pattern" class="invalid-feedback d-block">
+              Email không hợp lệ
+            </div>
+          </ng-template>
+        </div>
+        <div class="col-sm-6 form-group">
+          <label>Số điện thoại</label>
+          <input type="text" class="form-control" [(ngModel)]="employee.phone" placeholder="Số điện thoại"/>
+        </div>
+      </div>
+<!--      <div class="row">-->
+<!--        <div class="col-sm-6 form-group">-->
+<!--          <label>Ngày sinh</label>-->
+<!--          <app-date-picker [(startDate)]="employee.birthDate"-->
+<!--                           parentEl="{{updateEmployeeModalWrapper.id}}"></app-date-picker>-->
+<!--        </div>-->
+<!--        <div class="col-sm-6 form-group">-->
+<!--          <label>Vai trò</label>-->
+<!--          <p-autoComplete inputStyleClass="form-control" name="roleInput" id="roleInput" #roleInput="ngModel"-->
+<!--                          [(ngModel)]="role" [suggestions]="roleResult"-->
+<!--                          (completeMethod)="searchRoles($event)" field="name" size="100%"-->
+<!--                          placeholder="Nhập vai trò" [minLength]="1" [autoHighlight]="true"-->
+<!--                          (onSelect)="selectRole()" required-->
+<!--                          emptyMessage="Không tìm thấy"-->
+<!--                          [class]="{'is-invalid': roleInput.touched && roleInput.errors}">-->
+<!--            <ng-template let-item pTemplate="item">-->
+<!--              <div>{{item.name}}</div>-->
+<!--            </ng-template>-->
+<!--          </p-autoComplete>-->
+<!--          <ng-template [ngIf]="roleInput.touched && roleInput.invalid">-->
+<!--            <div *ngIf="roleInput.errors?.required" class="invalid-feedback d-block">-->
+<!--              Vui lòng nhập vai trò-->
+<!--            </div>-->
+<!--          </ng-template>-->
+<!--        </div>-->
+<!--      </div>-->
+    </div>
+    <div class="modal-footer justify-content-between">
+      <button (click)="hide()" type="button" class="btn btn-default">
+        <i class="fas fa-times mr-1"></i>
+        Đóng
+      </button>
+      <button type="submit" class="btn btn-primary" [disabled]="!isValid()">
+        <i class="far fa-save mr-1"></i>
+        Lưu
+      </button>
+    </div>
+  </form>
+</app-modal-wrapper>
