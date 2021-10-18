@@ -24,24 +24,26 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
-          <div class="card-body">
-            <app-data-table #dataTableEmployee [dataTable]="search" (changeEvent)="onChangeDataEvent($event)">
-              <div class="block-buttons-right float-sm-right text-center">
-                <button (click)="addEmployeeComponent.show()" class="btn btn-success">
-                  <i class="fas fa-plus mr-1"></i>
-                  Thêm thành viên
-                </button>
-              </div>
-              <thead>
+          <div class="row justify-content-end pt-2 pb-2 pr-2 float-right">
+            <div class="text-center float-right">
+              <button (click)="addEmployeeComponent.show()" class="btn btn-success">
+                <i class="fas fa-plus mr-1"></i>
+                Thêm thành viên
+              </button>
+            </div>
+          </div>
+            <div class="card-body table-responsive p-0">
+              <table class="table table-head-fixed text-nowrap">
+                <thead>
                 <tr>
                   <th>Họ tên</th>
                   <th>Email</th>
                   <th>Số điện thoại</th>
                   <th></th>
                 </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let e of search.result">
+                </thead>
+                <tbody>
+                <tr *ngFor="let e of search">
                   <td>{{e.name}}</td>
                   <td>{{e.email}}</td>
                   <td>{{e.phone}}</td>
@@ -58,9 +60,9 @@
                     </app-dropdown-menu>
                   </td>
                 </tr>
-              </tbody>
-            </app-data-table>
-          </div>
+                </tbody>
+              </table>
+            </div>
         </div>
       </div>
     </div>

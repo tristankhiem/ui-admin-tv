@@ -21,13 +21,14 @@ export class EmployeeComponent implements OnInit {
 
   @ViewChild('dataTableEmployee', {read: ElementRef}) dataTableEmployee: ElementRef;
 
-  public search: BaseSearchModel<EmployeeModel[]> = new BaseSearchModel<EmployeeModel[]>();
+  public search: EmployeeModel[] = [];
 
   ngOnInit(): void {
     this.getEmployees();
   }
 
-  public onChangeDataEvent(search?: BaseSearchModel<EmployeeModel[]>): void {
+  public onChangeDataEvent(search?: EmployeeModel[]): void {
+    window.location.reload();
     if (search) {
       this.search = search;
     }
@@ -37,22 +38,18 @@ export class EmployeeComponent implements OnInit {
 
   public openDeleteModal(employee: EmployeeModel, event: Event): void {
     event.preventDefault();
-    this.modal.confirm(`Bạn có chắc chắn muốn xóa tài khoản ${employee.name}?`, 'Xóa tài khoản nhân viên', true)
+    this.modal.confirm(`Bạn có chắc chắn muốn xóa tài khoản ${employee.name}?`, 'Xóa tài khoản thành viên', true)
       .subscribe(res => this.confirmDeleteEmployee(res, employee));
   }
 
   private getEmployees(targetLoading?: ElementRef): void {
     this.loading.show(targetLoading);
-    this.employeeService.search(this.search).subscribe( res =>  this.getEmployeesCompleted(res, targetLoading));
+    this.employeeService.findAll().subscribe( res =>  this.getEmployeesCompleted(res, targetLoading));
   }
 
-  private getEmployeesCompleted(res: ResponseModel<BaseSearchModel<EmployeeModel[]>>, targetLoading: ElementRef): void {
+  private getEmployeesCompleted(res: EmployeeModel[], targetLoading: ElementRef): void {
     this.loading.hide(targetLoading);
-    if (res.status !== HTTP_CODE_CONSTANT.OK) {
-      this.alert.errorMessages(res.message);
-    }
-
-    this.search = res.result;
+    this.search = res;
   }
 
   private confirmDeleteEmployee(state: boolean, employee: EmployeeModel): void {
@@ -64,14 +61,8 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.deleteEmployee(employee.id).subscribe(res => this.deleteEmployeeCompleted(res));
   }
 
-  private deleteEmployeeCompleted(res: ResponseModel<any>): void {
+  private deleteEmployeeCompleted(res: any): void {
     this.loading.hide();
-    if (res.status !== HTTP_CODE_CONSTANT.OK) {
-      this.alert.errorMessages(res.message);
-      return;
-    }
-
-    this.alert.successMessages(res.message);
     this.onChangeDataEvent();
   }
 

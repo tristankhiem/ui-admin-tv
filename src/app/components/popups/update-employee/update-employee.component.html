@@ -31,8 +31,9 @@
           </ng-template>
         </div>
         <div class="col-sm-6 form-group">
-          <label>Số điện thoại</label>
-          <input type="text" class="form-control" [(ngModel)]="employee.phone" placeholder="Số điện thoại"/>
+          <label for="phoneInputUpdate">Số điện thoại</label>
+          <input type="text" class="form-control" name="phoneInputUpdate" id="phoneInputUpdate" #phoneInputUpdate="ngModel"
+                 [(ngModel)]="employee.phone" placeholder="Số điện thoại"/>
         </div>
       </div>
 <!--      <div class="row">-->

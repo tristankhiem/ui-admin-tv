@@ -106,14 +106,8 @@ export class AddEmployeeComponent implements AfterViewInit {
     this.employeeService.save(this.newEmployee).subscribe(res => this.saveEmployeeCompleted(res));
   }
 
-  private saveEmployeeCompleted(res: ResponseModel<EmployeeModel>): void {
+  private saveEmployeeCompleted(res: EmployeeModel): void {
     this.loading.hide(this.targetModalLoading);
-    if (res.status !== HTTP_CODE_CONSTANT.OK) {
-      this.alert.errorMessages(res.message);
-      return;
-    }
-
-    this.alert.successMessages(res.message);
     this.saveCompleted.emit();
     this.hide();
   }

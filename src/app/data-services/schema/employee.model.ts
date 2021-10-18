@@ -1,6 +1,6 @@
 import {RoleModel} from './role.model';
 export class EmployeeModel {
-  public id: number;
+  public id: string;
   public name: string;
   public email: string;
   public password: string;

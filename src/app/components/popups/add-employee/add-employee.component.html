@@ -31,7 +31,8 @@
         </div>
         <div class="col-sm-6 form-group">
           <label>Số điện thoại</label>
-          <input type="text" class="form-control" [(ngModel)]="newEmployee.phone" placeholder="Số điện thoại"/>
+          <input type="text" class="form-control" name="phoneInputAdd" id="phoneInputAdd" #phoneInputAdd="ngModel"
+                 [(ngModel)]="newEmployee.phone" placeholder="Số điện thoại"/>
         </div>
       </div>
 <!--      <div class="row">-->

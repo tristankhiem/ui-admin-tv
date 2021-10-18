@@ -13,23 +13,27 @@ export class EmployeeService extends StoreBaseService{
         return this.post('/api/employee/search', search);
     }
 
+  public findAll(): Observable<any>{
+    return this.get('/api/student/get-students');
+  }
+
     public getLikeName(name: string): Observable<any>{
         return this.get('/api/employee/get-like-name' + name);
     }
 
-    public getById(id: number): Observable<any>{
-        return this.get('/api/employee/' + id);
+    public getById(id: string): Observable<any>{
+        return this.get('/api/student/get-student/' + id);
     }
 
     public save(employee: EmployeeModel): Observable<any>{
-        return this.post('/api/employee/insert', employee);
+        return this.post('/api/student/create', employee);
     }
 
     public update(employee: EmployeeModel): Observable<any>{
-        return this.put('/api/employee/update', employee);
+        return this.put('/api/student/update', employee);
     }
 
-    public deleteEmployee(id: number): Observable<any>{
-        return this.delete('/api/employee/delete/' + id);
+    public deleteEmployee(id: string): Observable<any>{
+        return this.delete('/api/student/delete/' + id);
     }
 }

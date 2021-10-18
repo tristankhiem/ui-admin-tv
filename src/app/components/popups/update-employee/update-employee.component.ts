@@ -68,20 +68,14 @@ export class UpdateEmployeeComponent implements  AfterViewInit{
     this.updateEmployeeForm.onReset();
   }
 
-  private getEmployee(id: number): void{
+  private getEmployee(id: string): void{
     this.loading.show();
     this.employeeService.getById(id).subscribe(res => this.getEmployeeCompleted(res));
   }
 
-  private getEmployeeCompleted(res: ResponseModel<EmployeeModel>): void {
+  private getEmployeeCompleted(res: EmployeeModel): void {
     this.loading.hide();
-    if (res.status !== HTTP_CODE_CONSTANT.OK) {
-      this.alert.errorMessages(res.message);
-      return;
-    }
-
-    this.employee = res.result;
-    this.role = this.employee.role;
+    this.employee = res;
   }
 
   public isValid(): boolean{
@@ -128,14 +122,8 @@ export class UpdateEmployeeComponent implements  AfterViewInit{
     this.employeeService.update(this.employee).subscribe(res => this.saveEmployeeCompleted(res));
   }
 
-  private saveEmployeeCompleted(res: ResponseModel<EmployeeModel>): void {
+  private saveEmployeeCompleted(res: EmployeeModel): void {
     this.loading.hide(this.targetModalLoading);
-    if (res.status !== HTTP_CODE_CONSTANT.OK) {
-      this.alert.errorMessages(res.message);
-      return;
-    }
-
-    this.alert.successMessages(res.message);
     this.saveCompleted.emit();
     this.hide();
   }
